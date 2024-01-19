@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import SearchComponent from './components/SearchComponent';
 import FlightListComponent from './components/FlightListComponent';
+import Header from './components/Header';
+import './App.css'; 
 
+
+//dönüş tarihi için yapılacaklar var. aynı bilette göstermek yerine onun için ayrı bir bilet çıkarılacak.
+// Tüm alanların validasyonu yapılmalı seçeneğine bir daha bak.
+// Listelenen uçuşlar kalkış saati, dönüş saati, uçuş uzunluğu, ya da fiyata göre sıralanabilmeli bu madde yapılacak (filtreleme-liste yöntemi)
+// LOADING ANIMATION OLACAK
+// GENEL UI BAK
+//GENEL BIR DAHA CHECK AT
 const App = () => {
   const [flights, setFlights] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +49,7 @@ const App = () => {
 
   return (
     <div>
+    <Header />
       <SearchComponent onSearch={handleSearch} />
       {isLoading && <p>Yükleniyor...</p>}
       {error && <p>{error}</p>}

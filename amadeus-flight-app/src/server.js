@@ -1,46 +1,89 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 3000;
 
-
-app.use(cors()); // CORS middleware'ini ekleyin
+app.use(cors()); 
 app.use(express.json());
+
 
 const flights = [
     {
-      id: 1,
-      airline: "Airline A",
-      flightNumber: "AA123",
-      departure: "İstanbul",
-      arrival: "Ankara",
-      departureTime: "2023-04-01T10:00:00",
-      arrivalTime: "2023-04-01T11:15:00",
-      duration: "1 saat 15 dakika",
-      price: 100
-    },
-  ];
-  
+        id: 1,
+        airline: "Airline A",
+        flightNumber: "AA43123",
+        departure: "Atatürk Havalimanı",
+        arrival: "Esenboğa Havalimanı",
+        departureTime: "2024-01-01T10:00:00",
+        arrivalTime: "2024-01-01T11:15:00",
+        duration: "1 saat 15 dakika",
+        price: 2400,
+      },
+      {
+        id: 2,
+        airline: "Airline B",
+        flightNumber: "AA23123",
+        departure: "Sabiha Gökçen Havalimanı",
+        arrival: "Antalya Havalimanı",
+        departureTime: "2024-02-02T12:00:00",
+        arrivalTime: "2024-02-02T13:15:00",
+        duration: "1 saat 15 dakika",
+        price: 2100,
+      },
+      {
+        id: 3,
+        airline: "Airline P",
+        flightNumber: "AA12323",
+        departure: "Adnan Menderes Havalimanı",
+        arrival: "Esenboğa Havalimanı",
+        departureTime: "2024-03-03T20:00:00",
+        arrivalTime: "2024-03-03T21:00:00",
+        duration: "1 saat",
+        price: 1500,
+      },
+      {
+        id: 4,
+        airline: "Airline THY",
+        flightNumber: "AA12344",
+        departure: "Atatürk Havalimanı",
+        arrival: "Adnan Menderes Havalimanı",
+        departureTime: "2024-04-04T02:00:00",
+        arrivalTime: "2024-04-04T05:05:00",
+        duration: "3 saat 5 dakika",
+        price: 1200,
+      },
 
-  app.post('/api/searchFlights', (req, res) => {
-    const { departure, arrival, departureDate, returnDate, isOneWay } = req.body;
-  
-    let filteredFlights = flights.filter(flight =>
+      {
+        id: 1,
+        airline: "Airline A",
+        flightNumber: "AA43123",
+        departure: "Esenboğa Havalimanı",
+        arrival: "Atatürk Havalimanı",
+        departureTime: "2024-02-02T10:00:00",
+        arrivalTime: "2024-02-02T11:15:00",
+        duration: "1 saat 15 dakika",
+        price: 2400,
+      },
+];
+
+app.post("/api/searchFlights", (req, res) => {
+  const { departure, arrival, departureDate, returnDate, isOneWay } = req.body;
+
+  let filteredFlights = flights.filter((flight) => {
+    const flightDepartureDate = flight.departureTime.split("T")[0];
+    const flightArrivalDate = flight.arrivalTime.split("T")[0];
+
+    return (
       flight.departure === departure &&
       flight.arrival === arrival &&
-      // Tarih formatınızı ve karşılaştırma mantığınızı buraya uyarlayın
-      new Date(flight.departureTime).toDateString() === new Date(departureDate).toDateString()
+      flightDepartureDate === departureDate &&
+      (isOneWay || flightArrivalDate === returnDate)
     );
-  
-    if (!isOneWay) {
-      filteredFlights = filteredFlights.filter(flight =>
-        new Date(flight.returnTime).toDateString() === new Date(returnDate).toDateString()
-      );
-    }
-  
-    res.json(filteredFlights);
   });
 
+  res.json(filteredFlights);
+});
+
 app.listen(port, () => {
-    console.log(`Listening on ${port}.`);
-  });
+  console.log(`Listening on ${port}.`);
+});

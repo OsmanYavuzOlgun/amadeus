@@ -1,15 +1,58 @@
 body {
+  background-color: black;
+  color: white;
   font-family: Arial, sans-serif;
 }
-
-.form-control {
+body .container {
+  width: 50%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+body .container .text {
+  margin-bottom: 12px;
+}
+body .container .input-text {
+  display: flex;
+  flex-direction: column;
+}
+body .container .loading {
+  text-align: center;
+}
+body .flight-item {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  width: 50%;
+  margin: 0 auto;
+}
+body .flight-item p {
+  padding: 4px;
+}
+body .flight-item .header-flight {
+  color: #007bff;
+  background-color: rgb(214, 214, 216);
+  margin: 0;
+  padding: 12px;
+}
+body .flight-item h3 {
+  color: #007bff;
+}
+body .form-control {
   margin-bottom: 10px;
   width: 100%;
   padding: 10px;
   font-size: 16px;
 }
-
-.button {
+body .button {
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -17,30 +60,20 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
-
-.button:hover {
+body .button:hover {
   background-color: #0056b3;
 }
-
-.container {
-  width: 50%;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+body .search-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.loading {
+body .header {
+  background-color: rgb(214, 214, 216);
+  color: black;
   text-align: center;
-}
-
-.flight-item {
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
-
-.flight-item h3 {
-  color: #007bff;
-}
+  padding: 10px 0;
+  font-size: 24px;
+}/*# sourceMappingURL=App.css.map */
