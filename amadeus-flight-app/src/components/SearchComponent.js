@@ -2,28 +2,40 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const SearchComponent = ({ onSearch }) => {
+const SearchComponent = ({ onSearch, onSort, isLoading }) => {
   const [departure, setDeparture] = useState("");
   const [arrival, setArrival] = useState("");
   const [departureDate, setDepartureDate] = useState(new Date());
   const [returnDate, setReturnDate] = useState(new Date());
   const [isOneWay, setIsOneWay] = useState(false);
 
-  const airports = ["Atatürk Havalimanı", "Sabiha Gökçen Havalimanı", "Adnan Menderes Havalimanı", "Antalya Havalimanı", "Esenboğa Havalimanı" ];
-  const [filteredDepartureAirports, setFilteredDepartureAirports] = useState(airports);
-  const [filteredArrivalAirports, setFilteredArrivalAirports] = useState(airports);
+  const airports = [
+    "Atatürk Havalimanı",
+    "Sabiha Gökçen Havalimanı",
+    "Adnan Menderes Havalimanı",
+    "Antalya Havalimanı",
+    "Esenboğa Havalimanı",
+  ];
+  const [filteredDepartureAirports, setFilteredDepartureAirports] =
+    useState(airports);
+  const [filteredArrivalAirports, setFilteredArrivalAirports] =
+    useState(airports);
 
   const handleAirportSearch = (value, setAirport, setFilteredAirports) => {
     setAirport(value);
-    setFilteredAirports(airports.filter(airport => 
-      airport.toLowerCase().includes(value.toLowerCase())
-    ));
+    setFilteredAirports(
+      airports.filter((airport) =>
+        airport.toLowerCase().includes(value.toLowerCase())
+      )
+    );
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formattedDepartureDate = departureDate.toISOString().split("T")[0];
-    const formattedReturnDate = returnDate ? returnDate.toISOString().split("T")[0] : null;
+    const formattedReturnDate = returnDate
+      ? returnDate.toISOString().split("T")[0]
+      : null;
     onSearch({
       departure,
       arrival,
@@ -33,6 +45,8 @@ const SearchComponent = ({ onSearch }) => {
     });
   };
 
+
+
   return (
     <form onSubmit={handleSubmit} className="container">
       <div className="input-text">
@@ -40,7 +54,13 @@ const SearchComponent = ({ onSearch }) => {
         <input
           type="text"
           value={departure}
-          onChange={(e) => handleAirportSearch(e.target.value, setDeparture, setFilteredDepartureAirports)}
+          onChange={(e) =>
+            handleAirportSearch(
+              e.target.value,
+              setDeparture,
+              setFilteredDepartureAirports
+            )
+          }
           placeholder="Kalkış Havalimanı"
           list="departure-airports"
           required
@@ -57,7 +77,13 @@ const SearchComponent = ({ onSearch }) => {
         <input
           type="text"
           value={arrival}
-          onChange={(e) => handleAirportSearch(e.target.value, setArrival, setFilteredArrivalAirports)}
+          onChange={(e) =>
+            handleAirportSearch(
+              e.target.value,
+              setArrival,
+              setFilteredArrivalAirports
+            )
+          }
           placeholder="Varış Havalimanı"
           list="arrival-airports"
           required
@@ -93,15 +119,22 @@ const SearchComponent = ({ onSearch }) => {
         <input
           type="checkbox"
           checked={isOneWay}
-          onChange={(e) => {
-            setIsOneWay(e.target.checked);
-            if (e.target.checked) {
-              setReturnDate(null);
-            }
-          }}
+          onChange={(e) => setIsOneWay(e.target.checked)}
         />
         Tek Yönlü Uçuş
       </label>
+
+   {/*    <div className="sort-options">
+        <label htmlFor="sort">Sıralama: </label>
+        <select id="sort" onChange={handleSortChange}>
+          <option value="departureTime">Kalkış Saati</option>
+          <option value="arrivalTime">Varış Saati</option>
+          <option value="duration">Uçuş Süresi</option>
+          <option value="price">Fiyat</option>
+        </select>
+      </div> */}
+
+      {isLoading && <div className="loading">Yükleniyor...</div>}
 
       <button className="search-button" type="submit">
         Ara

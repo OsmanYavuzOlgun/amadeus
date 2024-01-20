@@ -54,7 +54,7 @@ const flights = [
       },
 
       {
-        id: 1,
+        id: 5,
         airline: "Airline A",
         flightNumber: "AA43123",
         departure: "Esenboğa Havalimanı",
@@ -64,25 +64,68 @@ const flights = [
         duration: "1 saat 15 dakika",
         price: 2400,
       },
+      {
+        id: 6,
+        airline: "Airline A",
+        flightNumber: "AA43123",
+        departure: "Atatürk Havalimanı",
+        arrival: "Esenboğa Havalimanı",
+        departureTime: "2024-01-01T10:00:00",
+        arrivalTime: "2024-01-01T11:15:00",
+        duration: "1 saat 15 dakika",
+        price: 2420022,
+      },
+      {
+        id: 7,
+        airline: "Airline A",
+        flightNumber: "AA43123",
+        departure: "Atatürk Havalimanı",
+        arrival: "Esenboğa Havalimanı",
+        departureTime: "2024-01-01T10:00:00",
+        arrivalTime: "2024-01-01T11:15:00",
+        duration: "1 saat 15 dakika",
+        price: 242220,
+      },
 ];
 
-app.post("/api/searchFlights", (req, res) => {
+const returnFlights = [
+  {
+    id: 8,
+    airline: "Airline A",
+    flightNumber: "AA43124",
+    departure: "Esenboğa Havalimanı",
+    arrival: "Atatürk Havalimanı",
+    departureTime: "2024-01-02T12:00:00",
+    arrivalTime: "2024-01-02T13:15:00",
+    duration: "1 saat 15 dakika",
+    price: 2500,
+  },
+];
+
+
+app.post('/api/searchFlights', (req, res) => {
   const { departure, arrival, departureDate, returnDate, isOneWay } = req.body;
 
-  let filteredFlights = flights.filter((flight) => {
-    const flightDepartureDate = flight.departureTime.split("T")[0];
-    const flightArrivalDate = flight.arrivalTime.split("T")[0];
+  let filteredFlights = flights.filter(flight =>
+    flight.departure === departure &&
+    flight.arrival === arrival &&
+    new Date(flight.departureTime).toDateString() === new Date(departureDate).toDateString()
+  );
 
-    return (
-      flight.departure === departure &&
-      flight.arrival === arrival &&
-      flightDepartureDate === departureDate &&
-      (isOneWay || flightArrivalDate === returnDate)
+  if (!isOneWay) {
+    const filteredReturnFlights = returnFlights.filter(flight =>
+      flight.departure === arrival &&
+      flight.arrival === departure &&
+      new Date(flight.departureTime).toDateString() === new Date(returnDate).toDateString()
     );
-  });
+
+    filteredFlights = filteredFlights.concat(filteredReturnFlights);
+  }
 
   res.json(filteredFlights);
 });
+
+
 
 app.listen(port, () => {
   console.log(`Listening on ${port}.`);
