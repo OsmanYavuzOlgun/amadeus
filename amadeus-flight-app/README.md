@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# ((You need to start Node server in 3000 and React server in 3001 in order to fetch datas properly from node.))
+
 ## Available Scripts
 
 In the project directory, you can run:
