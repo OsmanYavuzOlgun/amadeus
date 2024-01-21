@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../App.css";
 
-const SearchComponent = ({ onSearch, onSort, isLoading }) => {
-  const [departure, setDeparture] = useState("");
-  const [arrival, setArrival] = useState("");
-  const [departureDate, setDepartureDate] = useState(new Date());
-  const [returnDate, setReturnDate] = useState(new Date());
-  const [isOneWay, setIsOneWay] = useState(false);
+const SearchComponent = ({ onSearch }) => {
+  const [departure, setDeparture] = useState(""); // kalkış havaalanı
+  const [arrival, setArrival] = useState(""); // varış havaalanı
+  const [departureDate, setDepartureDate] = useState(new Date()); //kalkış tarihi
+  const [returnDate, setReturnDate] = useState(new Date()); // dönüş tarihi
+  const [isOneWay, setIsOneWay] = useState(false); // tek yön uçuş olup olmadığı
 
   const airports = [
     "Atatürk Havalimanı",
@@ -15,11 +16,10 @@ const SearchComponent = ({ onSearch, onSort, isLoading }) => {
     "Adnan Menderes Havalimanı",
     "Antalya Havalimanı",
     "Esenboğa Havalimanı",
-  ];
-  const [filteredDepartureAirports, setFilteredDepartureAirports] =
-    useState(airports);
-  const [filteredArrivalAirports, setFilteredArrivalAirports] =
-    useState(airports);
+  ]; // select için açılmış airport isimleri
+  
+  const [filteredDepartureAirports, setFilteredDepartureAirports] = useState(airports); // arama anında filtrelenecek ve datalistte onna göre çıkartacak kalkış havaalanlarını tutar
+  const [filteredArrivalAirports, setFilteredArrivalAirports] = useState(airports); // arama anında filtrelenecek ve datalistte onna göre çıkartacak varış havaalanlarını tutar
 
   const handleAirportSearch = (value, setAirport, setFilteredAirports) => {
     setAirport(value);
@@ -33,9 +33,7 @@ const SearchComponent = ({ onSearch, onSort, isLoading }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formattedDepartureDate = departureDate.toISOString().split("T")[0];
-    const formattedReturnDate = returnDate
-      ? returnDate.toISOString().split("T")[0]
-      : null;
+    const formattedReturnDate = returnDate.toISOString().split("T")[0];
     onSearch({
       departure,
       arrival,
@@ -44,8 +42,6 @@ const SearchComponent = ({ onSearch, onSort, isLoading }) => {
       isOneWay,
     });
   };
-
-
 
   return (
     <form onSubmit={handleSubmit} className="container">
@@ -94,7 +90,6 @@ const SearchComponent = ({ onSearch, onSort, isLoading }) => {
           ))}
         </datalist>
       </div>
-
       <div className="input-text">
         <p className="text">Ayrılış Tarihi</p>
         <DatePicker
@@ -103,7 +98,6 @@ const SearchComponent = ({ onSearch, onSort, isLoading }) => {
           dateFormat="yyyy/MM/dd"
         />
       </div>
-
       {!isOneWay && (
         <div className="input-text">
           <p className="text">Dönüş Tarihi</p>
@@ -114,31 +108,19 @@ const SearchComponent = ({ onSearch, onSort, isLoading }) => {
           />
         </div>
       )}
-
-      <label>
-        <input
-          type="checkbox"
-          checked={isOneWay}
-          onChange={(e) => setIsOneWay(e.target.checked)}
-        />
-        Tek Yönlü Uçuş
-      </label>
-
-   {/*    <div className="sort-options">
-        <label htmlFor="sort">Sıralama: </label>
-        <select id="sort" onChange={handleSortChange}>
-          <option value="departureTime">Kalkış Saati</option>
-          <option value="arrivalTime">Varış Saati</option>
-          <option value="duration">Uçuş Süresi</option>
-          <option value="price">Fiyat</option>
-        </select>
-      </div> */}
-
-      {isLoading && <div className="loading">Yükleniyor...</div>}
-
-      <button className="search-button" type="submit">
-        Ara
-      </button>
+      <div className="input-text">
+        <label className="text">
+          <input
+            type="checkbox"
+            checked={isOneWay}
+            onChange={(e) => setIsOneWay(e.target.checked)}
+          />
+          Tek Yönlü Uçuş
+        </label>
+        <button className="search-button" type="submit">
+          Ara
+        </button>
+      </div>
     </form>
   );
 };

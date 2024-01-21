@@ -1,0 +1,6 @@
+@media only screen and (max-width: 991px) {
+  body .container {
+    width: 50%;
+    flex-direction: column;
+  }
+}/*# sourceMappingURL=responsive.css.map */

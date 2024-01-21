@@ -1,10 +1,82 @@
 body {
-    background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
-  
+  background: linear-gradient(90deg, #0a1646 40%, #3d0b5e 100% 100%);
+  color: white;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  .all-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1rem;
+
+    .please-search-text {
+      text-align: center;
+    }
+
+    .all-flight-section {
+      .flight-titles {
+        text-align: center;
+        margin: 18px;
+      }
+
+      .flight-item {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        margin: 1rem auto;
+        padding: 1rem;
+        width: 70%;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .header-flight {
+          background-color: #007bff;
+          color: white;
+          padding: 0.75rem;
+          border-radius: 8px;
+          margin: -1rem -1rem 1rem -1rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+          h3 {
+            margin: 0;
+          }
+        }
+
+        p {
+          margin: 0.5rem 0;
+          color: #333;
+          font-size: 1rem;
+        }
+
+        .flight-details {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          p {
+            flex-basis: 45%;
+          }
+        }
+      }
+    }
+
+    .header {
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 24px;
+    }
+
     .container {
-      width: 50%;
+      width: 90%;
       margin: 20px auto;
       padding: 20px;
       border: 1px solid #ddd;
@@ -12,81 +84,69 @@ body {
       background-color: white;
       color: black;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-  
+
       .text {
         margin-bottom: 12px;
       }
-  
+
       .input-text {
         display: flex;
         flex-direction: column;
+        width: 100%;
+        margin: 12px;
       }
-  
-      .loading {
-        text-align: center;
-      }
-    }
-  
-    .flight-item {
-      border: 1px solid #ddd;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      background-color: white;
-      color: black;
-      width: 50%;
-      margin: 0 auto;
 
-      p{
-        padding: 4px;
+      .search-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 12px;
+        &:hover {
+          background-color: #0056b3;
+        }
       }
-      .header-flight{
-        color: #007bff;
-        background-color: rgb(214 214 216);
-        margin: 0;
-        padding: 12px;
-      }
-  
-      h3 {
-        color: #007bff;
-      }
-    }
-  
-    .form-control {
-      margin-bottom: 10px;
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-    }
-  
-    .button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-  
-      &:hover {
-        background-color: #0056b3;
-      }
-    }
-  
-    .search-button {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    .header {
-      background-color: rgb(214 214 216);
-      color: black;
-      text-align: center;
-      padding: 10px 0;
-      font-size: 24px;
     }
   }
-  
+
+  .loading-section {
+    text-align: center;
+    .loading {
+      width: 48px;
+      height: 48px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+      &::after {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-bottom-color: #ff3d00;
+      }
+    }
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@import url(responsive.scss);
